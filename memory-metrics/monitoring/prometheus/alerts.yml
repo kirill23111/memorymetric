@@ -1,0 +1,11 @@
+groups:
+  - name: memory-alerts
+    rules:
+      - alert: HighJvmHeapUsage
+        expr: (sum(jvm_memory_used_bytes{area="heap"}) / sum(jvm_memory_max_bytes{area="heap"})) > 0.80
+        for: 30s
+        labels:
+          severity: warning
+        annotations:
+          summary: "High JVM heap usage"
+          description: "JVM heap usage is above 80% for 30s. Current value: {{ $value }}"
